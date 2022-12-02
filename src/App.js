@@ -1,24 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useReducer } from "react";
+import "./App.css";
+import PokemonContext from "./PokemonContext";
+import PokemonReducer from "./PokemonReducer";
+import PokemonTable from "./components/PokemonTable";
 
 function App() {
+  const [state, dispatch] = useReducer(PokemonReducer, {
+    searchPokemon: "",
+    selectedPokemon: "",
+    listPokemon: [],
+  });
+
+  useEffect(() => {
+    fetch("./pokemonList.json")
+      .then((res) => res.json())
+      .then((data) => dispatch({ type: "SET_POKEMON_LIST", payload: data }));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <PokemonContext.Provider
+      value={{
+        state,
+        dispatch,
+      }}
+    >
+      <main className="App">
+        <section>
+          <h1>Search</h1>
+          <PokemonTable></PokemonTable>
+        </section>
+
+        <section>
+          <h1>Pokemon</h1>
+          <h1>Stats</h1>
+        </section>
+      </main>
+    </PokemonContext.Provider>
   );
 }
 
