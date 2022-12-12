@@ -3,11 +3,16 @@ import "./App.css";
 import PokemonContext from "./PokemonContext";
 import PokemonReducer from "./PokemonReducer";
 import PokemonTable from "./components/PokemonTable";
+import PokemonStats from "./components/PokemonStats";
+import PokemonView from "./components/PokemonView";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 function App() {
   const [state, dispatch] = useReducer(PokemonReducer, {
     searchPokemon: "",
-    selectedPokemon: "",
+    selectedPokemon: {},
     listPokemon: [],
   });
 
@@ -25,14 +30,17 @@ function App() {
       }}
     >
       <main className="App">
-        <section>
-          <h1>Search</h1>
-          <PokemonTable></PokemonTable>
+        <section className="pokemonView">
+          <h1>Pokedex</h1>
+          <QueryClientProvider client={queryClient}>
+            <PokemonTable></PokemonTable>
+          </QueryClientProvider>
+          <PokemonView></PokemonView>
         </section>
 
-        <section>
-          <h1>Pokemon</h1>
-          <h1>Stats</h1>
+        <section className="pokemonStats">
+          <h1>Pokemon Stats</h1>
+          <PokemonStats></PokemonStats>
         </section>
       </main>
     </PokemonContext.Provider>

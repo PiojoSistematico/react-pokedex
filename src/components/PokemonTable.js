@@ -1,11 +1,29 @@
 import React, { useContext } from "react";
 import PokemonContext from "../PokemonContext";
+import { useQuery } from "react-query";
 
 const PokemonTable = () => {
   const {
     state: { listPokemon, searchPokemon },
     dispatch,
   } = useContext(PokemonContext);
+
+  const { isLoading, isError, isFetching, refetch } = useQuery(
+    "pokemonData",
+    () =>
+      fetch(`https://pokeapi.co/api/v2/pokemon/${searchPokemon}`)
+        .then((res) => res.json())
+        .then((info) =>
+          dispatch({ type: "SET_SELECTED_POKEMON", payload: info })
+        ),
+    {
+      enabled: false,
+    }
+  );
+
+  if (isLoading || isFetching) return <h2>"Searching..."</h2>;
+
+  if (isError) return <h2>{isError.message}</h2>;
 
   return (
     <section>
@@ -16,7 +34,7 @@ const PokemonTable = () => {
           dispatch({ type: "SET_POKEMON_SEARCH", payload: e.target.value })
         }
       />
-      <button>Search</button>
+      <button onClick={refetch}>Search</button>
       <table>
         <tbody>
           {listPokemon
