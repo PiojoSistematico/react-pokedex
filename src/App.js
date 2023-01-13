@@ -30,16 +30,14 @@ function App() {
       }}
     >
       <main className="App">
-        <section className="pokemonView">
-          <h1>Pokedex</h1>
+        <section>
           <QueryClientProvider client={queryClient}>
             <PokemonTable></PokemonTable>
           </QueryClientProvider>
           <PokemonView></PokemonView>
         </section>
 
-        <section className="pokemonStats">
-          <h1>Pokemon Stats</h1>
+        <section>
           <PokemonStats></PokemonStats>
         </section>
       </main>

@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import PokemonContext from "../PokemonContext";
 import { useQuery } from "react-query";
+import { FcSearch } from "react-icons/fc";
 
 const PokemonTable = () => {
   const {
@@ -34,7 +35,8 @@ const PokemonTable = () => {
           dispatch({ type: "SET_POKEMON_SEARCH", payload: e.target.value })
         }
       />
-      <button onClick={refetch}>Search</button>
+      <FcSearch onClick={refetch}></FcSearch>
+      {/* <button onClick={refetch}>Search</button> */}
       <table>
         <tbody>
           {listPokemon

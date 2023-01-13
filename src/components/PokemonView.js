@@ -7,9 +7,11 @@ const PokemonView = () => {
   } = useContext(PokemonContext);
 
   return selectedPokemon.hasOwnProperty("sprites") ? (
-    <div className="pokemonWindow">
-      <img src={selectedPokemon.sprites.other.home.front_default} alt="" />
-    </div>
+    <section>
+      <div className="pokemonWindow">
+        <img src={selectedPokemon.sprites.other.home.front_default} alt="" />
+      </div>
+    </section>
   ) : null;
 };
 
